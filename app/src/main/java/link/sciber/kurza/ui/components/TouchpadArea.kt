@@ -90,7 +90,7 @@ fun TouchpadArea(
                 color = borderColor,
                 shape = RoundedCornerShape(16.dp)
             )
-            .pointerInput(Unit) {
+            .pointerInput(leftBtnPressed, rightBtnPressed) {
                 awaitEachGesture {
                     val firstDown = awaitFirstDown()
                     firstDown.consume()
@@ -172,8 +172,8 @@ fun TouchpadArea(
                                     leftBtnPressed,
                                     rightBtnPressed
                                 )
+                                lastPosition = currentPosition
                             }
-                            lastPosition = currentPosition
                         }
 
                         event.changes.forEach { it.consume() }

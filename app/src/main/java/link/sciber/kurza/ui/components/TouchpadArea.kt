@@ -49,16 +49,18 @@ fun TouchpadArea(
     onSendMouse: (Int, Int, Int, Boolean, Boolean) -> Unit
 ) {
     val scope = rememberCoroutineScope()
-    var lastTapTime by remember { mutableStateOf(0L) }
-    val doubleTapTimeout = 300L
+    val gestureHandler = remember {
+        TouchpadGestureHandler(
+            sensitivity = sensitivity,
+            scrollSensitivity = scrollSensitivity
+        )
+    }
 
-    // Visual feedback state
-    var isTouching by remember { mutableStateOf(false) }
-    var touchPosition by remember { mutableStateOf(Offset.Zero) }
-    var fingerCount by remember { mutableStateOf(0) }
+    // Visual feedback state derived from gesture handler
+    var gestureState by remember { mutableStateOf(GestureState()) }
 
     val borderColor by animateColorAsState(
-        targetValue = if (isTouching)
+        targetValue = if (gestureState.isTouching)
             MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
         else
             MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
@@ -67,7 +69,7 @@ fun TouchpadArea(
     )
 
     val backgroundColor by animateColorAsState(
-        targetValue = if (isTouching)
+        targetValue = if (gestureState.isTouching)
             MaterialTheme.colorScheme.primary.copy(alpha = 0.05f)
         else
             Color.Transparent,
@@ -89,7 +91,7 @@ fun TouchpadArea(
             )
             .background(backgroundColor)
             .border(
-                width = if (isTouching) 2.dp else 1.dp,
+                width = if (gestureState.isTouching) 2.dp else 1.dp,
                 color = borderColor,
                 shape = RoundedCornerShape(16.dp)
             )
@@ -98,85 +100,57 @@ fun TouchpadArea(
                     val firstDown = awaitFirstDown()
                     firstDown.consume()
 
-                    // Start touch feedback
-                    isTouching = true
-                    touchPosition = firstDown.position
-                    fingerCount = 1
-
-                    var lastPosition = firstDown.position
-                    var isTwoFinger = false
-                    var hasMoved = false
-                    var lastTwoFingerCenter = Offset.Zero
-                    val moveThreshold = 10f
+                    gestureHandler.onGestureStart(firstDown.position)
+                    gestureState = gestureHandler.gestureState
 
                     while (true) {
                         val event = awaitPointerEvent()
                         val activePointers = event.changes.filter { it.pressed }
 
                         if (activePointers.isEmpty()) {
-                            // End touch feedback
-                            isTouching = false
-                            fingerCount = 0
-
-                            if (!hasMoved && !isTwoFinger) {
-                                val currentTime = System.currentTimeMillis()
-                                if (currentTime - lastTapTime < doubleTapTimeout) {
+                            when (val result = gestureHandler.onGestureEnd(leftBtnPressed, rightBtnPressed)) {
+                                is TapResult.DoubleTap -> {
                                     onSendMouse(0, 0, 0, false, true)
                                     onSendMouse(0, 0, 0, false, false)
-                                    lastTapTime = 0L
-                                } else {
-                                    lastTapTime = currentTime
+                                }
+                                is TapResult.SingleTapPending -> {
+                                    val tapTime = result.tapTime
                                     scope.launch {
-                                        delay(doubleTapTimeout)
-                                        if (lastTapTime == currentTime) {
+                                        delay(300L)
+                                        if (gestureHandler.shouldExecuteSingleTap(tapTime)) {
                                             onSendMouse(0, 0, 0, true, false)
                                             onSendMouse(0, 0, 0, false, false)
                                         }
                                     }
                                 }
+                                TapResult.None -> {}
                             }
+                            gestureState = gestureHandler.gestureState
                             event.changes.forEach { it.consume() }
                             break
                         }
 
-                        // Update finger count for visual feedback
-                        fingerCount = activePointers.size
-
-                        if (activePointers.size >= 2) {
-                            isTwoFinger = true
-                            val center = Offset(
-                                activePointers.map { it.position.x }.average().toFloat(),
-                                activePointers.map { it.position.y }.average().toFloat()
+                        val action = if (activePointers.size >= 2) {
+                            gestureHandler.onTwoFingerMove(
+                                activePointers.map { it.position },
+                                leftBtnPressed,
+                                rightBtnPressed
                             )
-                            touchPosition = center
+                        } else {
+                            gestureHandler.onSingleFingerMove(
+                                activePointers.first().position,
+                                leftBtnPressed,
+                                rightBtnPressed
+                            )
+                        }
 
-                            if (lastTwoFingerCenter != Offset.Zero) {
-                                val deltaY = center.y - lastTwoFingerCenter.y
-                                val scrollAmount = (-deltaY * scrollSensitivity).toInt()
-                                if (scrollAmount != 0) {
-                                    onSendMouse(0, 0, scrollAmount, leftBtnPressed, rightBtnPressed)
-                                }
-                            }
-                            lastTwoFingerCenter = center
-                        } else if (activePointers.size == 1 && !isTwoFinger) {
-                            val currentPosition = activePointers.first().position
-                            touchPosition = currentPosition
-                            val delta = currentPosition - lastPosition
+                        gestureState = gestureHandler.gestureState
 
-                            if (delta.getDistance() > moveThreshold) {
-                                hasMoved = true
-                            }
-
-                            if (hasMoved) {
-                                onSendMouse(
-                                    (delta.x * sensitivity).toInt(),
-                                    (delta.y * sensitivity).toInt(),
-                                    0,
-                                    leftBtnPressed,
-                                    rightBtnPressed
-                                )
-                                lastPosition = currentPosition
-                            }
+                        when (action) {
+                            is MouseAction.Move -> onSendMouse(action.dx, action.dy, 0, action.leftBtn, action.rightBtn)
+                            is MouseAction.Scroll -> onSendMouse(0, 0, action.amount, action.leftBtn, action.rightBtn)
+                            is MouseAction.Click -> onSendMouse(0, 0, 0, action.leftBtn, action.rightBtn)
+                            null -> {}
                         }
 
                         event.changes.forEach { it.consume() }
@@ -187,7 +161,7 @@ fun TouchpadArea(
     ) {
         // Hint text (fades when touching)
         val textAlpha by animateFloatAsState(
-            targetValue = if (isTouching) 0.3f else 1f,
+            targetValue = if (gestureState.isTouching) 0.3f else 1f,
             animationSpec = tween(150),
             label = "textAlpha"
         )
@@ -198,7 +172,7 @@ fun TouchpadArea(
             modifier = Modifier.alpha(textAlpha)
         ) {
             Text(
-                text = if (isTouching && fingerCount >= 2) "Scrolling" else "Move cursor",
+                text = if (gestureState.isTouching && gestureState.fingerCount >= 2) "Scrolling" else "Move cursor",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

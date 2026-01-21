@@ -14,6 +14,14 @@ class HidService(
     private val onHidReady: (Boolean) -> Unit,
     private val onConnectionStateChanged: (Int, BluetoothDevice?) -> Unit
 ) {
+    companion object {
+        // QoS Settings for Bluetooth HID
+        private const val QOS_TOKEN_RATE = 800          // Tokens per second for data transmission
+        private const val QOS_TOKEN_BUCKET_SIZE = 900   // Max burst size in tokens
+        private const val QOS_PEAK_BANDWIDTH = 10000    // Peak bandwidth in bytes/sec
+        private const val QOS_LATENCY = 10000           // Max acceptable latency in microseconds
+        private const val QOS_DELAY_VARIATION = 10000   // Max delay variation in microseconds
+    }
 
     private var hidDevice: BluetoothHidDevice? = null
     private var connectedDevice: BluetoothDevice? = null
@@ -127,11 +135,11 @@ class HidService(
 
         val qosSettings = BluetoothHidDeviceAppQosSettings(
             BluetoothHidDeviceAppQosSettings.SERVICE_BEST_EFFORT,
-            800,
-            900,
-            10000,
-            10000,
-            10000
+            QOS_TOKEN_RATE,
+            QOS_TOKEN_BUCKET_SIZE,
+            QOS_PEAK_BANDWIDTH,
+            QOS_LATENCY,
+            QOS_DELAY_VARIATION
         )
 
         hidDevice?.registerApp(

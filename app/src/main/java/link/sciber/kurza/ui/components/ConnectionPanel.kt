@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import link.sciber.kurza.bluetooth.safeDisplayName
 import link.sciber.kurza.ui.theme.KurzaTheme
 import link.sciber.kurza.ui.theme.StatusConnecting
 
@@ -98,11 +99,6 @@ fun ConnectionPanel(
                 else -> {
                     // Reconnect button
                     if (lastConnectedDevice != null) {
-                        val lastDeviceName = try {
-                            lastConnectedDevice.name ?: "Last Device"
-                        } catch (e: SecurityException) {
-                            "Last Device"
-                        }
                         Button(
                             onClick = onReconnect,
                             modifier = Modifier.fillMaxWidth(),
@@ -112,7 +108,7 @@ fun ConnectionPanel(
                             shape = RoundedCornerShape(12.dp)
                         ) {
                             Text(
-                                text = "Reconnect to $lastDeviceName",
+                                text = "Reconnect to ${lastConnectedDevice.safeDisplayName()}",
                                 modifier = Modifier.padding(vertical = 4.dp)
                             )
                         }
@@ -150,11 +146,7 @@ fun ConnectionPanel(
                                 shape = RoundedCornerShape(12.dp)
                             ) {
                                 Text(
-                                    text = try {
-                                        device.name ?: "Unknown Device"
-                                    } catch (e: SecurityException) {
-                                        "Unknown Device"
-                                    },
+                                    text = device.safeDisplayName(),
                                     modifier = Modifier.padding(vertical = 4.dp)
                                 )
                             }

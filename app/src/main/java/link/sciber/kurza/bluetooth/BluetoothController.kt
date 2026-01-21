@@ -115,10 +115,10 @@ class BluetoothController(private val context: Context) {
                 when (state) {
                     BluetoothProfile.STATE_CONNECTED -> {
                         _lastConnectedDevice.value = device
-                        _connectedDeviceName.value = safeDeviceName(device)
+                        _connectedDeviceName.value = device?.safeDisplayName()
                     }
                     BluetoothProfile.STATE_CONNECTING -> {
-                        _connectedDeviceName.value = safeDeviceName(device)
+                        _connectedDeviceName.value = device?.safeDisplayName()
                     }
                     BluetoothProfile.STATE_DISCONNECTED -> {
                         refreshPairedDevices()
@@ -192,9 +192,10 @@ class BluetoothController(private val context: Context) {
         receiverRegistered = true
     }
 
-    private fun safeDeviceName(device: BluetoothDevice?): String? = try {
-        device?.name
-    } catch (e: SecurityException) {
-        "Unknown Device"
-    }
+}
+
+fun BluetoothDevice.safeDisplayName(): String = try {
+    name ?: "Unknown Device"
+} catch (e: SecurityException) {
+    "Unknown Device"
 }

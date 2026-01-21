@@ -36,6 +36,7 @@ fun TouchpadScreen(controller: BluetoothController, activity: Activity) {
     val pairedDevices by controller.pairedDevices.collectAsState()
     val isHidReady by controller.isHidReady.collectAsState()
     val lastConnectedDevice by controller.lastConnectedDevice.collectAsState()
+    val isBluetoothEnabled by controller.isBluetoothEnabled.collectAsState()
 
     var leftBtnPressed by remember { mutableStateOf(false) }
     var rightBtnPressed by remember { mutableStateOf(false) }
@@ -44,6 +45,7 @@ fun TouchpadScreen(controller: BluetoothController, activity: Activity) {
         connectionState = connectionState,
         deviceName = deviceName,
         isHidReady = isHidReady,
+        isBluetoothEnabled = isBluetoothEnabled,
         lastConnectedDevice = lastConnectedDevice,
         pairedDevices = pairedDevices,
         leftBtnPressed = leftBtnPressed,
@@ -52,6 +54,7 @@ fun TouchpadScreen(controller: BluetoothController, activity: Activity) {
         onRightBtnPressedChange = { rightBtnPressed = it },
         onReconnect = { controller.reconnect() },
         onMakeDiscoverable = { controller.requestDiscoverable(activity) },
+        onRequestEnableBluetooth = { controller.requestEnableBluetooth(activity) },
         onConnectToDevice = { controller.connectToDevice(it) },
         onSendMouse = { dx, dy, scroll, left, right ->
             controller.sendMouse(dx, dy, scroll, left, right)
@@ -64,6 +67,7 @@ fun TouchpadScreenContent(
     connectionState: Int,
     deviceName: String?,
     isHidReady: Boolean,
+    isBluetoothEnabled: Boolean,
     lastConnectedDevice: BluetoothDevice?,
     pairedDevices: List<BluetoothDevice>,
     leftBtnPressed: Boolean,
@@ -72,6 +76,7 @@ fun TouchpadScreenContent(
     onRightBtnPressedChange: (Boolean) -> Unit,
     onReconnect: () -> Unit,
     onMakeDiscoverable: () -> Unit,
+    onRequestEnableBluetooth: () -> Unit,
     onConnectToDevice: (BluetoothDevice) -> Unit,
     onSendMouse: (Int, Int, Int, Boolean, Boolean) -> Unit
 ) {
@@ -111,11 +116,13 @@ fun TouchpadScreenContent(
             if (connectionState != BluetoothProfile.STATE_CONNECTED) {
                 Spacer(modifier = Modifier.height(16.dp))
                 ConnectionPanel(
+                    isBluetoothEnabled = isBluetoothEnabled,
                     isHidReady = isHidReady,
                     lastConnectedDevice = lastConnectedDevice,
                     pairedDevices = pairedDevices,
                     onReconnect = onReconnect,
                     onMakeDiscoverable = onMakeDiscoverable,
+                    onRequestEnableBluetooth = onRequestEnableBluetooth,
                     onConnectToDevice = onConnectToDevice
                 )
                 Spacer(modifier = Modifier.weight(1f))

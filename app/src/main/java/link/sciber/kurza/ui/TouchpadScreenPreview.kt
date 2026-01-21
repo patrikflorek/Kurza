@@ -13,6 +13,7 @@ private fun TouchpadScreenConnectedPreview() {
             connectionState = BluetoothProfile.STATE_CONNECTED,
             deviceName = "Desktop-PC",
             isHidReady = true,
+            isBluetoothEnabled = true,
             lastConnectedDevice = null,
             pairedDevices = emptyList(),
             leftBtnPressed = false,
@@ -21,6 +22,7 @@ private fun TouchpadScreenConnectedPreview() {
             onRightBtnPressedChange = {},
             onReconnect = {},
             onMakeDiscoverable = {},
+            onRequestEnableBluetooth = {},
             onConnectToDevice = {},
             onSendMouse = { _, _, _, _, _ -> }
         )
@@ -35,6 +37,7 @@ private fun TouchpadScreenDisconnectedPreview() {
             connectionState = BluetoothProfile.STATE_DISCONNECTED,
             deviceName = null,
             isHidReady = true,
+            isBluetoothEnabled = true,
             lastConnectedDevice = null,
             pairedDevices = emptyList(),
             leftBtnPressed = false,
@@ -43,6 +46,7 @@ private fun TouchpadScreenDisconnectedPreview() {
             onRightBtnPressedChange = {},
             onReconnect = {},
             onMakeDiscoverable = {},
+            onRequestEnableBluetooth = {},
             onConnectToDevice = {},
             onSendMouse = { _, _, _, _, _ -> }
         )

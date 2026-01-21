@@ -1,3 +1,5 @@
+![App Logo](logo.png)
+
 # Kurza - Bluetooth Touchpad for PC
 
 Kurza is an Android app that turns your Android phone into a wireless touchpad for any Bluetooth-enabled computer using the standard Bluetooth HID (Human Interface Device) protocol. Works with Windows, macOS, and Linux.

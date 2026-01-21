@@ -8,10 +8,7 @@ import android.bluetooth.BluetoothHidDeviceAppSdpSettings
 import android.bluetooth.BluetoothProfile
 import android.content.Context
 import android.util.Log
-import java.util.Arrays
-import java.util.concurrent.Executor
 
-@SuppressLint("MissingPermission")
 class HidService(
     private val context: Context,
     private val onHidReady: (Boolean) -> Unit,
@@ -54,6 +51,7 @@ class HidService(
         0xC0.toByte()       // End Collection
     )
 
+    @SuppressLint("MissingPermission")
     private val inputHostCallback = object : BluetoothHidDevice.Callback() {
         override fun onAppStatusChanged(pluggedDevice: BluetoothDevice?, registered: Boolean) {
             Log.d("HidService", "onAppStatusChanged: registered=$registered device=$pluggedDevice")
@@ -117,6 +115,7 @@ class HidService(
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun registerApp() {
         val sdpSettings = BluetoothHidDeviceAppSdpSettings(
             "Kurza Mouse",
@@ -145,10 +144,12 @@ class HidService(
         )
     }
 
+    @SuppressLint("MissingPermission")
     fun connect(device: BluetoothDevice) {
         hidDevice?.connect(device)
     }
 
+    @SuppressLint("MissingPermission")
     fun sendMouseReport(dx: Int, dy: Int, wheel: Int, leftBtn: Boolean, rightBtn: Boolean, middleBtn: Boolean) {
         val device = connectedDevice ?: return
         val service = hidDevice ?: return
@@ -173,6 +174,7 @@ class HidService(
         service.sendReport(device, 0, report)
     }
     
+    @SuppressLint("MissingPermission")
     fun disconnect() {
         hidDevice?.unregisterApp()
         // Note: can't easily force disconnect from app side other than unregistering

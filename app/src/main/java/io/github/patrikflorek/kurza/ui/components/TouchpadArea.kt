@@ -1,4 +1,4 @@
-package link.sciber.kurza.ui.components
+package io.github.patrikflorek.kurza.ui.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
@@ -34,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import link.sciber.kurza.ui.theme.KurzaTheme
+import io.github.patrikflorek.kurza.ui.theme.KurzaTheme
 
 const val DEFAULT_SENSITIVITY = 1.5f
 const val DEFAULT_SCROLL_SENSITIVITY = 0.3f

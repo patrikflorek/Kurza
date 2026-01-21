@@ -1,6 +1,7 @@
-package link.sciber.kurza.bluetooth
+package io.github.patrikflorek.kurza.bluetooth
 
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothHidDevice
 import android.bluetooth.BluetoothHidDeviceAppQosSettings
@@ -25,7 +26,7 @@ class HidService(
 
     private var hidDevice: BluetoothHidDevice? = null
     private var connectedDevice: BluetoothDevice? = null
-    private var bluetoothAdapter: android.bluetooth.BluetoothAdapter? = null
+    private var bluetoothAdapter: BluetoothAdapter? = null
 
     // Standard Mouse Report Descriptor
     // 3 buttons + Wheel
@@ -111,7 +112,7 @@ class HidService(
         }
     }
 
-    fun initialize(bluetoothAdapter: android.bluetooth.BluetoothAdapter) {
+    fun initialize(bluetoothAdapter: BluetoothAdapter) {
         this.bluetoothAdapter = bluetoothAdapter
         bluetoothAdapter.getProfileProxy(context, serviceListener, BluetoothProfile.HID_DEVICE)
     }
@@ -126,8 +127,8 @@ class HidService(
     @SuppressLint("MissingPermission")
     private fun registerApp() {
         val sdpSettings = BluetoothHidDeviceAppSdpSettings(
-            "Kurza Mouse",
-            "Sciber Link",
+            "Kurza Remote",
+            "Remote touchpad",
             "Android",
             0x80.toByte(), // Subclass: Mouse
             mouseReportDescriptor

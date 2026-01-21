@@ -1,4 +1,4 @@
-package link.sciber.kurza.ui.components
+package io.github.patrikflorek.kurza.ui.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -22,8 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import link.sciber.kurza.ui.theme.KurzaTheme
-import link.sciber.kurza.ui.theme.SurfaceElevated
+import io.github.patrikflorek.kurza.ui.theme.KurzaTheme
+import io.github.patrikflorek.kurza.ui.theme.SurfaceElevated
 
 @Composable
 fun MouseButtonsRow(

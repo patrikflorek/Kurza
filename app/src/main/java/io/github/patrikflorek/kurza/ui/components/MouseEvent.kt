@@ -1,4 +1,4 @@
-package link.sciber.kurza.ui.components
+package io.github.patrikflorek.kurza.ui.components
 
 data class MouseEvent(
     val dx: Int = 0,

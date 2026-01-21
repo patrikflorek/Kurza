@@ -1,4 +1,4 @@
-package link.sciber.kurza.bluetooth
+package io.github.patrikflorek.kurza.bluetooth
 
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter

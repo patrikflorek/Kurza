@@ -1,4 +1,4 @@
-package link.sciber.kurza
+package io.github.patrikflorek.kurza
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -12,9 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import link.sciber.kurza.bluetooth.BluetoothController
-import link.sciber.kurza.ui.TouchpadScreen
-import link.sciber.kurza.ui.theme.KurzaTheme
+import io.github.patrikflorek.kurza.bluetooth.BluetoothController
+import io.github.patrikflorek.kurza.ui.TouchpadScreen
+import io.github.patrikflorek.kurza.ui.theme.KurzaTheme
 
 class MainActivity : ComponentActivity() {
 

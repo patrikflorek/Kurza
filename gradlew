@@ -23,7 +23,7 @@
 ##############################################################################
 
 # Attempt to set APP_HOME
-# Resolve links: $0 may be a link
+# Resolve links: $0 may be a io
 PRG="$0"
 # Need this for relative symlinks.
 while [ -h "$PRG" ] ; do

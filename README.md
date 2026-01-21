@@ -103,7 +103,7 @@ Your computer can handle multiple Bluetooth connections. Your phone acting as a 
 ## Project Structure
 
 ```
-app/src/main/java/link/sciber/kurza/
+app/src/main/java/io/github/patrikflorek/kurza/
 ├── MainActivity.kt              # Main activity with lifecycle handling
 ├── bluetooth
 │   ├── BluetoothController.kt   # Manages Bluetooth state and connections

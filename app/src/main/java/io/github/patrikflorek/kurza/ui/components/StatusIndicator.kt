@@ -1,4 +1,4 @@
-package link.sciber.kurza.ui.components
+package io.github.patrikflorek.kurza.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -24,9 +24,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import link.sciber.kurza.ui.theme.KurzaTheme
-import link.sciber.kurza.ui.theme.StatusConnected
-import link.sciber.kurza.ui.theme.StatusDisconnected
+import io.github.patrikflorek.kurza.ui.theme.KurzaTheme
+import io.github.patrikflorek.kurza.ui.theme.StatusConnected
+import io.github.patrikflorek.kurza.ui.theme.StatusDisconnected
 
 @Composable
 fun StatusIndicator(

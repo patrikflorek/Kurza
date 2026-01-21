@@ -1,7 +1,6 @@
-package link.sciber.kurza.ui.theme
+package io.github.patrikflorek.kurza.ui.theme
 
 import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme

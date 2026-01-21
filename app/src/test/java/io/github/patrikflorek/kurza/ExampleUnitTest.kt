@@ -1,4 +1,4 @@
-package link.sciber.kurza
+package io.github.patrikflorek.kurza
 
 import org.junit.Test
 

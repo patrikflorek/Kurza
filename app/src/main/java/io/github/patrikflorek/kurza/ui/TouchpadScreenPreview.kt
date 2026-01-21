@@ -1,9 +1,9 @@
-package link.sciber.kurza.ui
+package io.github.patrikflorek.kurza.ui
 
 import android.bluetooth.BluetoothProfile
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import link.sciber.kurza.ui.theme.KurzaTheme
+import io.github.patrikflorek.kurza.ui.theme.KurzaTheme
 
 @Preview(showBackground = true, widthDp = 360, heightDp = 640)
 @Composable

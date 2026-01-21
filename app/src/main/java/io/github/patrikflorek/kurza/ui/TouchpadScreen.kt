@@ -1,4 +1,4 @@
-package link.sciber.kurza.ui
+package io.github.patrikflorek.kurza.ui
 
 import android.app.Activity
 import android.bluetooth.BluetoothDevice
@@ -20,17 +20,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import link.sciber.kurza.bluetooth.BluetoothController
-import link.sciber.kurza.ui.components.ConnectionPanel
-import link.sciber.kurza.ui.components.MouseButtonsRow
-import link.sciber.kurza.ui.components.StatusIndicator
-import link.sciber.kurza.ui.components.DEFAULT_SCROLL_SENSITIVITY
-import link.sciber.kurza.ui.components.DEFAULT_SENSITIVITY
-import link.sciber.kurza.ui.components.MouseEvent
-import link.sciber.kurza.ui.components.TouchpadArea
-import link.sciber.kurza.ui.theme.StatusConnected
-import link.sciber.kurza.ui.theme.StatusConnecting
-import link.sciber.kurza.ui.theme.StatusDisconnected
+import io.github.patrikflorek.kurza.bluetooth.BluetoothController
+import io.github.patrikflorek.kurza.ui.components.ConnectionPanel
+import io.github.patrikflorek.kurza.ui.components.MouseButtonsRow
+import io.github.patrikflorek.kurza.ui.components.StatusIndicator
+import io.github.patrikflorek.kurza.ui.components.DEFAULT_SCROLL_SENSITIVITY
+import io.github.patrikflorek.kurza.ui.components.DEFAULT_SENSITIVITY
+import io.github.patrikflorek.kurza.ui.components.MouseEvent
+import io.github.patrikflorek.kurza.ui.components.TouchpadArea
+import io.github.patrikflorek.kurza.ui.theme.StatusConnected
+import io.github.patrikflorek.kurza.ui.theme.StatusConnecting
+import io.github.patrikflorek.kurza.ui.theme.StatusDisconnected
 
 @Composable
 fun TouchpadScreen(controller: BluetoothController, activity: Activity) {

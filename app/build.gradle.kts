@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "link.sciber.kurza"
+    namespace = "io.github.patrikflorek.kurza"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "link.sciber.kurza"
+        applicationId = "io.github.patrikflorek.kurza"
         minSdk = 28
         targetSdk = 36
         versionCode = 1

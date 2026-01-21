@@ -1,4 +1,4 @@
-package link.sciber.kurza.ui.components
+package io.github.patrikflorek.kurza.ui.components
 
 import android.bluetooth.BluetoothDevice
 import androidx.compose.foundation.layout.Arrangement
@@ -20,9 +20,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import link.sciber.kurza.bluetooth.safeDisplayName
-import link.sciber.kurza.ui.theme.KurzaTheme
-import link.sciber.kurza.ui.theme.StatusConnecting
+import io.github.patrikflorek.kurza.bluetooth.safeDisplayName
+import io.github.patrikflorek.kurza.ui.theme.KurzaTheme
+import io.github.patrikflorek.kurza.ui.theme.StatusConnecting
 
 @Composable
 fun ConnectionPanel(

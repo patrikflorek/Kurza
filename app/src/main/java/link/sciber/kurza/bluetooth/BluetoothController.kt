@@ -68,7 +68,6 @@ class BluetoothController(private val context: Context) {
 
     fun start() {
         registerBluetoothReceiver()
-        initialize()
     }
 
     fun stop() {

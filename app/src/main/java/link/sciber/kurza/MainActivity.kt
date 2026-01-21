@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         
         bluetoothController = BluetoothController(this)
+        bluetoothController.start()
 
         setContent {
             KurzaTheme {
@@ -79,6 +80,6 @@ class MainActivity : ComponentActivity() {
     
     override fun onDestroy() {
         super.onDestroy()
-        bluetoothController.disconnect()
+        bluetoothController.stop()
     }
 }

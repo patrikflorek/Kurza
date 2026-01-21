@@ -67,7 +67,13 @@ class TouchpadGestureHandler(
         leftBtnPressed: Boolean,
         rightBtnPressed: Boolean
     ): MouseAction? {
-        if (isTwoFinger) return null
+        if (isTwoFinger) {
+            // Transition from scroll to move: reset and anchor to current position
+            isTwoFinger = false
+            lastPosition = currentPosition
+            lastTwoFingerCenter = Offset.Zero
+            return null  // Skip this frame to avoid cursor jump
+        }
         
         _gestureState = _gestureState.copy(
             fingerCount = 1,

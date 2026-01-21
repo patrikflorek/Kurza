@@ -31,7 +31,7 @@ fun MouseButtonsRow(
     rightBtnPressed: Boolean,
     onLeftBtnPressedChange: (Boolean) -> Unit,
     onRightBtnPressedChange: (Boolean) -> Unit,
-    onSendMouse: (Int, Int, Int, Boolean, Boolean) -> Unit
+    onMouseEvent: (MouseEvent) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -46,7 +46,7 @@ fun MouseButtonsRow(
             isPressed = leftBtnPressed,
             onPressChange = { pressed ->
                 onLeftBtnPressedChange(pressed)
-                onSendMouse(0, 0, 0, pressed, rightBtnPressed)
+                onMouseEvent(MouseEvent.click(leftButton = pressed, rightButton = rightBtnPressed))
             }
         )
 
@@ -57,7 +57,7 @@ fun MouseButtonsRow(
             isPressed = rightBtnPressed,
             onPressChange = { pressed ->
                 onRightBtnPressedChange(pressed)
-                onSendMouse(0, 0, 0, leftBtnPressed, pressed)
+                onMouseEvent(MouseEvent.click(leftButton = leftBtnPressed, rightButton = pressed))
             }
         )
     }
@@ -126,7 +126,7 @@ private fun MouseButtonsRowPreview() {
             rightBtnPressed = false,
             onLeftBtnPressedChange = {},
             onRightBtnPressedChange = {},
-            onSendMouse = { _, _, _, _, _ -> }
+            onMouseEvent = {}
         )
     }
 }
@@ -140,7 +140,7 @@ private fun MouseButtonsRowPressedPreview() {
             rightBtnPressed = false,
             onLeftBtnPressedChange = {},
             onRightBtnPressedChange = {},
-            onSendMouse = { _, _, _, _, _ -> }
+            onMouseEvent = {}
         )
     }
 }

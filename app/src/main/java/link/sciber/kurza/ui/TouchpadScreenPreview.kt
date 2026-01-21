@@ -24,7 +24,7 @@ private fun TouchpadScreenConnectedPreview() {
             onMakeDiscoverable = {},
             onRequestEnableBluetooth = {},
             onConnectToDevice = {},
-            onSendMouse = { _, _, _, _, _ -> }
+            onMouseEvent = {}
         )
     }
 }
@@ -48,7 +48,7 @@ private fun TouchpadScreenDisconnectedPreview() {
             onMakeDiscoverable = {},
             onRequestEnableBluetooth = {},
             onConnectToDevice = {},
-            onSendMouse = { _, _, _, _, _ -> }
+            onMouseEvent = {}
         )
     }
 }

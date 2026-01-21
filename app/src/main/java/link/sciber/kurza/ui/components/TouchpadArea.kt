@@ -46,7 +46,7 @@ fun TouchpadArea(
     rightBtnPressed: Boolean,
     sensitivity: Float = DEFAULT_SENSITIVITY,
     scrollSensitivity: Float = DEFAULT_SCROLL_SENSITIVITY,
-    onSendMouse: (Int, Int, Int, Boolean, Boolean) -> Unit
+    onMouseEvent: (MouseEvent) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val gestureHandler = remember {
@@ -110,16 +110,16 @@ fun TouchpadArea(
                         if (activePointers.isEmpty()) {
                             when (val result = gestureHandler.onGestureEnd(leftBtnPressed, rightBtnPressed)) {
                                 is TapResult.DoubleTap -> {
-                                    onSendMouse(0, 0, 0, false, true)
-                                    onSendMouse(0, 0, 0, false, false)
+                                    onMouseEvent(MouseEvent.rightClick())
+                                    onMouseEvent(MouseEvent.release())
                                 }
                                 is TapResult.SingleTapPending -> {
                                     val tapTime = result.tapTime
                                     scope.launch {
                                         delay(300L)
                                         if (gestureHandler.shouldExecuteSingleTap(tapTime)) {
-                                            onSendMouse(0, 0, 0, true, false)
-                                            onSendMouse(0, 0, 0, false, false)
+                                            onMouseEvent(MouseEvent.leftClick())
+                                            onMouseEvent(MouseEvent.release())
                                         }
                                     }
                                 }
@@ -147,9 +147,9 @@ fun TouchpadArea(
                         gestureState = gestureHandler.gestureState
 
                         when (action) {
-                            is MouseAction.Move -> onSendMouse(action.dx, action.dy, 0, action.leftBtn, action.rightBtn)
-                            is MouseAction.Scroll -> onSendMouse(0, 0, action.amount, action.leftBtn, action.rightBtn)
-                            is MouseAction.Click -> onSendMouse(0, 0, 0, action.leftBtn, action.rightBtn)
+                            is MouseAction.Move -> onMouseEvent(MouseEvent.move(action.dx, action.dy, action.leftBtn, action.rightBtn))
+                            is MouseAction.Scroll -> onMouseEvent(MouseEvent.scroll(action.amount, action.leftBtn, action.rightBtn))
+                            is MouseAction.Click -> onMouseEvent(MouseEvent.click(action.leftBtn, action.rightBtn))
                             null -> {}
                         }
 
@@ -194,7 +194,7 @@ private fun TouchpadAreaPreview() {
             modifier = Modifier.height(300.dp),
             leftBtnPressed = false,
             rightBtnPressed = false,
-            onSendMouse = { _, _, _, _, _ -> }
+            onMouseEvent = {}
         )
     }
 }

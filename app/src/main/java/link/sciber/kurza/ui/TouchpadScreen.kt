@@ -26,6 +26,7 @@ import link.sciber.kurza.ui.components.MouseButtonsRow
 import link.sciber.kurza.ui.components.StatusIndicator
 import link.sciber.kurza.ui.components.DEFAULT_SCROLL_SENSITIVITY
 import link.sciber.kurza.ui.components.DEFAULT_SENSITIVITY
+import link.sciber.kurza.ui.components.MouseEvent
 import link.sciber.kurza.ui.components.TouchpadArea
 import link.sciber.kurza.ui.theme.StatusConnected
 import link.sciber.kurza.ui.theme.StatusConnecting
@@ -58,8 +59,8 @@ fun TouchpadScreen(controller: BluetoothController, activity: Activity) {
         onMakeDiscoverable = { controller.requestDiscoverable(activity) },
         onRequestEnableBluetooth = { controller.requestEnableBluetooth(activity) },
         onConnectToDevice = { controller.connectToDevice(it) },
-        onSendMouse = { dx, dy, scroll, left, right ->
-            controller.sendMouse(dx, dy, scroll, left, right)
+        onMouseEvent = { event ->
+            controller.sendMouse(event.dx, event.dy, event.scroll, event.leftButton, event.rightButton)
         }
     )
 }
@@ -82,7 +83,7 @@ fun TouchpadScreenContent(
     onMakeDiscoverable: () -> Unit,
     onRequestEnableBluetooth: () -> Unit,
     onConnectToDevice: (BluetoothDevice) -> Unit,
-    onSendMouse: (Int, Int, Int, Boolean, Boolean) -> Unit
+    onMouseEvent: (MouseEvent) -> Unit
 ) {
     val statusText = when(connectionState) {
         BluetoothProfile.STATE_CONNECTED -> deviceName ?: "PC"
@@ -140,7 +141,7 @@ fun TouchpadScreenContent(
                     rightBtnPressed = rightBtnPressed,
                     sensitivity = sensitivity,
                     scrollSensitivity = scrollSensitivity,
-                    onSendMouse = onSendMouse
+                    onMouseEvent = onMouseEvent
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -150,7 +151,7 @@ fun TouchpadScreenContent(
                     rightBtnPressed = rightBtnPressed,
                     onLeftBtnPressedChange = onLeftBtnPressedChange,
                     onRightBtnPressedChange = onRightBtnPressedChange,
-                    onSendMouse = onSendMouse
+                    onMouseEvent = onMouseEvent
                 )
             }
         }

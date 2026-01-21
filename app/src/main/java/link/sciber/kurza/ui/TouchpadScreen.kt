@@ -24,6 +24,8 @@ import link.sciber.kurza.bluetooth.BluetoothController
 import link.sciber.kurza.ui.components.ConnectionPanel
 import link.sciber.kurza.ui.components.MouseButtonsRow
 import link.sciber.kurza.ui.components.StatusIndicator
+import link.sciber.kurza.ui.components.DEFAULT_SCROLL_SENSITIVITY
+import link.sciber.kurza.ui.components.DEFAULT_SENSITIVITY
 import link.sciber.kurza.ui.components.TouchpadArea
 import link.sciber.kurza.ui.theme.StatusConnected
 import link.sciber.kurza.ui.theme.StatusConnecting
@@ -72,6 +74,8 @@ fun TouchpadScreenContent(
     pairedDevices: List<BluetoothDevice>,
     leftBtnPressed: Boolean,
     rightBtnPressed: Boolean,
+    sensitivity: Float = DEFAULT_SENSITIVITY,
+    scrollSensitivity: Float = DEFAULT_SCROLL_SENSITIVITY,
     onLeftBtnPressedChange: (Boolean) -> Unit,
     onRightBtnPressedChange: (Boolean) -> Unit,
     onReconnect: () -> Unit,
@@ -134,6 +138,8 @@ fun TouchpadScreenContent(
                     modifier = Modifier.weight(1f),
                     leftBtnPressed = leftBtnPressed,
                     rightBtnPressed = rightBtnPressed,
+                    sensitivity = sensitivity,
+                    scrollSensitivity = scrollSensitivity,
                     onSendMouse = onSendMouse
                 )
 

@@ -36,18 +36,21 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import link.sciber.kurza.ui.theme.KurzaTheme
 
+const val DEFAULT_SENSITIVITY = 1.5f
+const val DEFAULT_SCROLL_SENSITIVITY = 0.3f
+
 @Composable
 fun TouchpadArea(
     modifier: Modifier = Modifier,
     leftBtnPressed: Boolean,
     rightBtnPressed: Boolean,
+    sensitivity: Float = DEFAULT_SENSITIVITY,
+    scrollSensitivity: Float = DEFAULT_SCROLL_SENSITIVITY,
     onSendMouse: (Int, Int, Int, Boolean, Boolean) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     var lastTapTime by remember { mutableStateOf(0L) }
     val doubleTapTimeout = 300L
-    val sensitivity = 1.5f
-    val scrollSensitivity = 0.3f
 
     // Visual feedback state
     var isTouching by remember { mutableStateOf(false) }

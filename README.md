@@ -114,8 +114,10 @@ app/src/main/java/io/github/patrikflorek/kurza/
     ├── components
     │   ├── ConnectionPanel.kt   # Connection controls and status actions
     │   ├── MouseButtons.kt      # On-screen left/right click buttons
+    │   ├── MouseEvent.kt        # Mouse event data class
     │   ├── StatusIndicator.kt   # Connection status indicator pill
-    │   └── TouchpadArea.kt      # Gesture handling for cursor movement
+    │   ├── TouchpadArea.kt      # Touchpad UI with gesture integration
+    │   └── TouchpadGestureHandler.kt  # Testable gesture detection logic
     └── theme
         ├── Color.kt             # Color palette definitions
         ├── Theme.kt             # Compose theme setup

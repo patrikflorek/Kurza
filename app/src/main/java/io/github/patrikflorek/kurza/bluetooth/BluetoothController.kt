@@ -144,15 +144,23 @@ class BluetoothController(private val context: Context) {
     }
 
     fun requestDiscoverable(activity: Activity, durationSeconds: Int = 300) {
-        val discoverableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
-            putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, durationSeconds)
+        try {
+            val discoverableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
+                putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, durationSeconds)
+            }
+            activity.startActivity(discoverableIntent)
+        } catch (e: SecurityException) {
+            // Permission not granted
         }
-        activity.startActivity(discoverableIntent)
     }
 
     fun requestEnableBluetooth(activity: Activity) {
-        val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-        activity.startActivity(enableIntent)
+        try {
+            val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            activity.startActivity(enableIntent)
+        } catch (e: SecurityException) {
+            // Permission not granted
+        }
     }
 
     fun reconnect() {

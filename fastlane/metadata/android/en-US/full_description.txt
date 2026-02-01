@@ -1,0 +1,9 @@
+Kurza is a free and open-source Android app that turns your phone into a Bluetooth touchpad to control your PC effortlessly.
+
+Highlights:
+- Control your PC over Bluetooth like a wireless touchpad
+- Modern Compose UI with Material 3 components
+- No ads or proprietary trackers
+- Open source under the MIT License
+
+If you find issues, please report them in the project issue tracker.

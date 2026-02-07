@@ -4,6 +4,11 @@
 
 Kurza is an Android app that turns your Android phone into a wireless touchpad for any Bluetooth-enabled computer using the standard Bluetooth HID (Human Interface Device) protocol. Works with Windows, macOS, and Linux.
 
+## Links
+
+- **Website:** https://patrikflorek.github.io — overview, screenshots, and quick-start instructions.
+- **Latest release (APK):** [GitHub Releases](https://github.com/patrikflorek/Kurza/releases/latest) — download the APK from the newest release.
+
 ## Features
 
 - **Wireless Mouse Control**: Use your Android phone's touchscreen as a touchpad to control your computer cursor
